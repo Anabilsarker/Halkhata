@@ -16,23 +16,13 @@ using System.Windows.Shapes;
 namespace Halkhata.UC
 {
     /// <summary>
-    /// Interaction logic for Login.xaml
+    /// Interaction logic for Transaction.xaml
     /// </summary>
-    public partial class Login : UserControl
+    public partial class Transaction : UserControl
     {
-        public Login()
+        public Transaction()
         {
             InitializeComponent();
-        }
-
-        private void Hyperlink_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow.Instance.mainwindow.Content = new SignUp();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow.Instance.mainwindow.Content = new TabbedMenu();
         }
     }
 }

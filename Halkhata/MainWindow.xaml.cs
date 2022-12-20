@@ -29,7 +29,7 @@ namespace Halkhata
         {
             InitializeComponent();
             _instance = this;
-            MongoDatabase.InitMongo();
+            //MongoDatabase.InitMongo();
         }
     }
 }
