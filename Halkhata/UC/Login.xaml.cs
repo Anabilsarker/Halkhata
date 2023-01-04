@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Halkhata.Database;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,15 @@ namespace Halkhata.UC
     /// </summary>
     public partial class Login : UserControl
     {
+        MySqlDatabase db;
+        public static string UserName { get; set; }
         public Login()
         {
             InitializeComponent();
+            db = MySqlDatabase.Instance;
+            db.Initialize_DB();
+            db.Create_Table_User();
+            db.Create_Table_Expences();
         }
 
         private void Hyperlink_Click(object sender, RoutedEventArgs e)
@@ -32,7 +39,18 @@ namespace Halkhata.UC
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.Instance.mainwindow.Content = new TabbedMenu();
+            if (db.Validate_User(email.Text, password.Password))
+            {
+                if (email.Text == "admin")
+                {
+                    MainWindow.Instance.mainwindow.Content = new AdminPanel();
+                }
+                else
+                {
+                    UserName = email.Text;
+                    MainWindow.Instance.mainwindow.Content = new TabbedMenu();
+                }
+            }
         }
     }
 }

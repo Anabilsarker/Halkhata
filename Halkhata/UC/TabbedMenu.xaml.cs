@@ -1,18 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
+﻿using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using ZstdSharp.Unsafe;
 
 namespace Halkhata.UC
 {
@@ -27,25 +14,63 @@ namespace Halkhata.UC
         {
             InitializeComponent();
             _instance = this;
+            Transaction_Click(null, null);
         }
 
-        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Transaction_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            if (e.AddedItems.Count == 1)
-            {
-                if (((TabItem)e.AddedItems[0]).Header.ToString() == "Transactaion")
-                {
-                    transaction.Content = new Transaction();
-                }
-                else if (((TabItem)e.AddedItems[0]).Header.ToString() == "Expenses")
-                {
-                    
-                }
-                else if (((TabItem)e.AddedItems[0]).Header.ToString() == "Loan")
-                {
+            presentContent.Content = new Transaction();
 
-                }
-            }
+            transaction_button.Width = 160;
+            transaction_button.Background = (Brush)new BrushConverter().ConvertFrom("#FF2196F3");
+            transaction_button.BorderBrush = (Brush)new BrushConverter().ConvertFrom("#FF2196F3");
+
+            expenses_button.Width = 150;
+            expenses_button.Background = (Brush)new BrushConverter().ConvertFrom("#62B9FF");
+            expenses_button.BorderBrush = (Brush)new BrushConverter().ConvertFrom("#62B9FF");
+
+            loan_button.Width = 150;
+            loan_button.Background = (Brush)new BrushConverter().ConvertFrom("#62B9FF");
+            loan_button.BorderBrush = (Brush)new BrushConverter().ConvertFrom("#62B9FF");
+        }
+
+        private void Expenses_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            presentContent.Content = new Expenses();
+
+            expenses_button.Width = 160;
+            expenses_button.Background = (Brush)new BrushConverter().ConvertFrom("#FF2196F3");
+            expenses_button.BorderBrush = (Brush)new BrushConverter().ConvertFrom("#FF2196F3");
+
+            transaction_button.Width = 150;
+            transaction_button.Background = (Brush)new BrushConverter().ConvertFrom("#62B9FF");
+            transaction_button.BorderBrush = (Brush)new BrushConverter().ConvertFrom("#62B9FF");
+
+            loan_button.Width = 150;
+            loan_button.Background = (Brush)new BrushConverter().ConvertFrom("#62B9FF");
+            loan_button.BorderBrush = (Brush)new BrushConverter().ConvertFrom("#62B9FF");
+        }
+
+        private void Loan_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            presentContent.Content = new Loan();
+
+            loan_button.Width = 160;
+            loan_button.Background = (Brush)new BrushConverter().ConvertFrom("#FF2196F3");
+            loan_button.BorderBrush = (Brush)new BrushConverter().ConvertFrom("#FF2196F3");
+
+            transaction_button.Width = 150;
+            transaction_button.Background = (Brush)new BrushConverter().ConvertFrom("#62B9FF");
+            transaction_button.BorderBrush = (Brush)new BrushConverter().ConvertFrom("#62B9FF");
+
+            expenses_button.Width = 150;
+            expenses_button.Background = (Brush)new BrushConverter().ConvertFrom("#62B9FF");
+            expenses_button.BorderBrush = (Brush)new BrushConverter().ConvertFrom("#62B9FF");
+        }
+
+        private void Logout_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            MainWindow.Instance.mainwindow.Content = new Login();
         }
     }
 }

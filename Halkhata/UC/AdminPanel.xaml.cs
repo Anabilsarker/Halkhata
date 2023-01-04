@@ -1,5 +1,4 @@
-﻿using Halkhata.Database;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,23 +16,13 @@ using System.Windows.Shapes;
 namespace Halkhata.UC
 {
     /// <summary>
-    /// Interaction logic for SignUp.xaml
+    /// Interaction logic for AdminPanel.xaml
     /// </summary>
-    public partial class SignUp : UserControl
+    public partial class AdminPanel : UserControl
     {
-        public SignUp()
+        public AdminPanel()
         {
             InitializeComponent();
-        }
-
-        private void GoBack(object sender, RoutedEventArgs e)
-        {
-            MainWindow.Instance.mainwindow.Content = new Login();
-        }
-
-        private void Submit_Click(object sender, RoutedEventArgs e)
-        {
-            MySqlDatabase.Instance.Update_Table_User(email.Text, password.Text, name.Text, 0.0, 0.0, 0.0);
         }
     }
 }

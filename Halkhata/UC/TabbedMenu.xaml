@@ -5,13 +5,26 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Halkhata.UC"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1000">
-    <Grid>
-        <TabControl TabStripPlacement="Left" SelectionChanged="TabControl_SelectionChanged">
-            <TabItem x:Name="transaction" Header="Transactaion" FontSize="20" FontWeight="SemiBold" Height="200" Width="160" Foreground="White" Background="#47ADFF"/>
-            <TabItem x:Name="expenses" Header="Expenses" FontSize="20" FontWeight="SemiBold" Height="200" Width="160" Foreground="White" Background="#47ADFF"/>
-            <TabItem x:Name="loan" Header="Loan" FontSize="20" FontWeight="SemiBold" Height="200" Width="160" Foreground="White" Background="#47ADFF"/>
-        </TabControl>
+    <Grid Background="#FFEAEAEA">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="160"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="70"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Left"  Grid.Row="0" Grid.Column="0">
+            <Button x:Name="transaction_button" Content="Transactaion" FontSize="20" FontWeight="SemiBold" Height="200" Width="160" BorderThickness="0,30,30,30" Foreground="White" HorizontalAlignment="Left" Click="Transaction_Click"/>
+            <Button x:Name="expenses_button" Content="Expenses" FontSize="20" FontWeight="SemiBold" Height="200" Width="160" BorderThickness="0,30,30,30" Foreground="White" HorizontalAlignment="Left" Click="Expenses_Click" />
+            <Button x:Name="loan_button" Content="Loan" FontSize="20" FontWeight="SemiBold" Height="200" Width="160" BorderThickness="0,30,30,30" Foreground="White" HorizontalAlignment="Left" Click="Loan_Click"/>
+        </StackPanel>
+        <ContentPresenter x:Name="presentContent" Grid.Row="0" Grid.Column="1"/>
+        <Button Height="60" Background="Transparent" BorderBrush="Transparent" VerticalAlignment="Bottom"  Grid.Row="0" Grid.Column="2" Click="Logout_Click" >
+            <materialDesign:PackIcon Kind="SignOut" Foreground="Black" Height="50" Width="66" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </Button>
     </Grid>
 </UserControl>

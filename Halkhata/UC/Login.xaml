@@ -25,8 +25,8 @@
         <Image Source="../Resources/Logo.png" Width="120" Height="100" Grid.Row="0" Grid.Column="0" Margin="0,60,0,0"/>
 
         <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="0">
-            <TextBox Width="320" Height="65" Background="White" Style="{StaticResource MaterialDesignOutlinedTextBox}" materialDesign:HintAssist.Hint="email"/>
-            <PasswordBox Width="320" Height="65" Background="White" Style="{StaticResource MaterialDesignOutlinedPasswordBox}" materialDesign:HintAssist.Hint="password" Margin="0,15,0,0"/>
+            <TextBox x:Name="email" Width="320" Height="65" Background="White" Style="{StaticResource MaterialDesignOutlinedTextBox}" materialDesign:HintAssist.Hint="email"/>
+            <PasswordBox x:Name="password" Width="320" Height="65" Background="White" Style="{StaticResource MaterialDesignOutlinedPasswordBox}" materialDesign:HintAssist.Hint="password" Margin="0,15,0,0"/>
             <Button Width="320" Height="65" Content="LOGIN" Margin="0,15,0,0" Click="Button_Click"/>
         </StackPanel>
 

@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Halkhata.Database;
+using Halkhata.Model;
+using System;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Halkhata.UC
 {
@@ -20,9 +12,23 @@ namespace Halkhata.UC
     /// </summary>
     public partial class Transaction : UserControl
     {
+        public static Transaction Instance { get { return _instance; } }
+        private static Transaction _instance = null;
+        public ObservableCollection<ItemData> itemData = new ObservableCollection<ItemData>();
         public Transaction()
         {
             InitializeComponent();
+            transaction.ItemsSource = itemData;
+            _instance = this;
+            itemData.Clear();
+            MySqlDatabase.Instance.Read_Table_Expences(Login.UserName);
+        }
+
+        private void AddItem_Click(object sender, RoutedEventArgs e)
+        {
+            MySqlDatabase.Instance.Update_Table_Expences(Login.UserName, spenton.Text, double.Parse(amount.Text), DateTime.Now.ToString("yyyy-MM-dd"));
+            itemData.Clear();
+            MySqlDatabase.Instance.Read_Table_Expences(Login.UserName);
         }
     }
 }
