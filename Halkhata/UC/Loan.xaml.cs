@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Halkhata.Database;
+using Halkhata.Model;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +23,33 @@ namespace Halkhata.UC
     /// </summary>
     public partial class Loan : UserControl
     {
+        public static Loan Instance { get { return _instance; } }
+        private static Loan _instance = null;
+        public ObservableCollection<UserData> userData = new ObservableCollection<UserData>();
         public Loan()
         {
             InitializeComponent();
+            _instance = this;
+        }
+
+        private void Submit_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (loanrequestreason.Text != "" || double.Parse(loanrequestamount.Text) != double.NaN || loancategory.SelectedValue != null)
+                {
+                    MySqlDatabase.Instance.Update_Table_Loan(Login.UserName, loanrequestreason.Text, double.Parse(loanrequestamount.Text), loancategory.Text);
+                    MessageBox.Show("Successfully requested for loan");
+                }
+                else
+                {
+                    MessageBox.Show("Please Input correct value");
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Please Enter Valid information");
+            }
         }
     }
 }

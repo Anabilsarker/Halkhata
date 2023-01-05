@@ -40,13 +40,13 @@
             <TextBox x:Name="email" Width="255" Background="White" Style="{StaticResource MaterialDesignOutlinedTextBox}" materialDesign:HintAssist.Hint="abc@abc.com" BorderBrush="{x:Null}" HorizontalAlignment="Left"/>
             <TextBlock Text="Password" FontSize="14" Margin="0,0,0,15"/>
             <TextBox x:Name="password" Width="255" Background="White" Style="{StaticResource MaterialDesignOutlinedTextBox}" materialDesign:HintAssist.Hint="**********" BorderBrush="{x:Null}" HorizontalAlignment="Left"/>
-            <CheckBox>
+            <CheckBox x:Name="agreementcheck" Checked="CheckBox_Checked" Unchecked="agreementcheck_Unchecked">
                 <TextBlock>
                     I've read and agree with terms of service and our <LineBreak></LineBreak> privecy policy
                 </TextBlock>
             </CheckBox>
 
-            <Button Style="{StaticResource MaterialDesignFloatingActionLightButton}" ToolTip="Next" HorizontalAlignment="Left" Margin="0,30,0,0" Click="Submit_Click">
+            <Button x:Name="submit" IsEnabled="False" Style="{StaticResource MaterialDesignFloatingActionLightButton}" ToolTip="Next" HorizontalAlignment="Left" Margin="0,30,0,0" Click="Submit_Click">
                 <materialDesign:PackIcon Kind="ArrowRight" Height="30" Width="30" />
             </Button>
         </StackPanel>

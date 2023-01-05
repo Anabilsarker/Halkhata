@@ -2,12 +2,7 @@
 using Halkhata.UC;
 using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Halkhata.Database
@@ -128,6 +123,41 @@ namespace Halkhata.Database
                 Dispose();
             }
         }
+        public void Create_Table_Loan()
+        {
+            try
+            {
+                sqlconnect = new MySqlConnection(connection_string);
+                sqlconnect.Open();
+                cmd = new MySqlCommand();
+                cmd.Connection = sqlconnect;
+
+                cmd.CommandText = "SHOW TABLES";
+                SqlReader = cmd.ExecuteReader();
+                while (SqlReader.Read())
+                {
+                    for (int i = 0; i < SqlReader.FieldCount; i++)
+                    {
+                        if (SqlReader.GetString(i).Contains("loan"))
+                        {
+                            Console.WriteLine("Table found.");
+                            SqlReader.Close();
+                            return;
+                        }
+                    }
+                }
+                SqlReader.Close();
+                cmd.CommandText = "CREATE TABLE loan (email_id VARCHAR(255), loan_request_reason LONGTEXT NOT NULL, amount DOUBLE(15, 5), category VARCHAR(255), FOREIGN KEY (email_id) REFERENCES user(email_id));";
+                SqlReader = cmd.ExecuteReader();
+                Console.WriteLine("loan table created");
+                SqlReader.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Dispose();
+            }
+        }
         public bool Update_Table_User(string user_id, string password, string name, double total_earned, double total_spent, double loan)
         {
             sqlconnect = new MySqlConnection(connection_string);
@@ -182,6 +212,67 @@ namespace Halkhata.Database
             cmd.Dispose();
             return true;
         }
+        public bool Update_Table_Loan(string user_id, string loan_request_reason, double amount, string category)
+        {
+            sqlconnect = new MySqlConnection(connection_string);
+            sqlconnect.Open();
+            cmd = new MySqlCommand();
+            cmd.Connection = sqlconnect;
+
+            cmd.CommandText = $"INSERT INTO loan (email_id,loan_request_reason,amount,category) VALUES('{user_id}','{loan_request_reason}','{amount}','{category}');";
+            try
+            {
+                cmd.ExecuteReader();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                sqlconnect.Close();
+                sqlconnect.Dispose();
+                cmd.Dispose();
+                return false;
+            }
+
+            Console.WriteLine("loan table updated");
+            sqlconnect.Close();
+            sqlconnect.Dispose();
+            cmd.Dispose();
+            return true;
+        }
+        public void Read_Table_User()
+        {
+            try
+            {
+                sqlconnect = new MySqlConnection(connection_string);
+                sqlconnect.Open();
+                cmd = new MySqlCommand();
+                cmd.Connection = sqlconnect;
+
+                cmd.CommandText = $"SELECT email_id FROM user;";
+                SqlReader = cmd.ExecuteReader();
+                string user = null;
+                while (SqlReader.Read())
+                {
+                    user = SqlReader.GetString(0);
+                    AdminPanel.Instance.userData.Add(new UserData() { Email = user });
+                }
+                SqlReader.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                sqlconnect.Close();
+                sqlconnect.Dispose();
+                cmd.Dispose();
+                return;
+            }
+
+            Console.WriteLine("expences table read");
+            sqlconnect.Close();
+            sqlconnect.Dispose();
+            cmd.Dispose();
+            return;
+        }
         public void Read_Table_Expences(string user_id)
         {
             try
@@ -198,15 +289,13 @@ namespace Halkhata.Database
                 string date = null;
                 while (SqlReader.Read())
                 {
-                    for (int i = 0; i < SqlReader.FieldCount; i++)
-                    {
-                        itemname = SqlReader.GetString(1); 
-                        price = double.Parse(SqlReader.GetString(2));
-                        date = SqlReader.GetString(3);
-                    }
+                    itemname = SqlReader.GetString(1);
+                    price = double.Parse(SqlReader.GetString(2));
+                    date = SqlReader.GetString(3);
                     Transaction.Instance.itemData.Add(new ItemData() { ItemName = itemname, Price = price, Date = date.Split(' ')[0] });
                 }
-                SqlReader.Close();            }
+                SqlReader.Close();
+            }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
@@ -217,6 +306,46 @@ namespace Halkhata.Database
             }
 
             Console.WriteLine("expences table read");
+            sqlconnect.Close();
+            sqlconnect.Dispose();
+            cmd.Dispose();
+            return;
+        }
+        public void Read_Table_Loan()
+        {
+            try
+            {
+                sqlconnect = new MySqlConnection(connection_string);
+                sqlconnect.Open();
+                cmd = new MySqlCommand();
+                cmd.Connection = sqlconnect;
+
+                cmd.CommandText = $"SELECT * FROM loan WHERE loan_request_reason IS NOT NULL OR loan_request_reason='';";
+                SqlReader = cmd.ExecuteReader();
+                string user_id = null;
+                string loan_request_reason = null;
+                double amount = 0.0;
+                string category = null;
+                while (SqlReader.Read())
+                {
+                    user_id = SqlReader.GetString(0);
+                    loan_request_reason = SqlReader.GetString(1);
+                    amount = double.Parse(SqlReader.GetString(2));
+                    category = SqlReader.GetString(3);
+                    AdminPanel.Instance.userData.Add(new UserData() { Email = user_id, LoanRequestReason = loan_request_reason, LoanAmount = amount, LoanCategory = category });
+                }
+                SqlReader.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                sqlconnect.Close();
+                sqlconnect.Dispose();
+                cmd.Dispose();
+                return;
+            }
+
+            Console.WriteLine("loan table read");
             sqlconnect.Close();
             sqlconnect.Dispose();
             cmd.Dispose();
@@ -238,12 +367,9 @@ namespace Halkhata.Database
                 string datetemp = null;
                 while (SqlReader.Read())
                 {
-                    for (int i = 0; i < SqlReader.FieldCount; i++)
-                    {
-                        itemname = SqlReader.GetString(1);
-                        price = double.Parse(SqlReader.GetString(2));
-                        datetemp = SqlReader.GetString(3);
-                    }
+                    itemname = SqlReader.GetString(1);
+                    price = double.Parse(SqlReader.GetString(2));
+                    datetemp = SqlReader.GetString(3);
                     Transaction.Instance.itemData.Add(new ItemData() { ItemName = itemname, Price = price, Date = datetemp.Split(' ')[0] });
                 }
             }

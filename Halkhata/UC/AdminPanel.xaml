@@ -17,43 +17,53 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch">
-            <Button Height="50" Background="Transparent">
+            <Button Height="50" Background="Transparent" BorderBrush="Transparent">
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="Home" Foreground="SkyBlue" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     <TextBlock Text="Dashboard" Foreground="Black"/>
                 </StackPanel>
             </Button>
-            <Button Height="50" Background="Transparent">
+            <Button Height="50" Background="Transparent" Click="UsersButton_Click">
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="User" Foreground="SkyBlue" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     <TextBlock Text="Users" Foreground="Black"/>
                 </StackPanel>
             </Button>
-            <Button Height="50" Background="Transparent">
+            <Button Height="50" Background="Transparent" Click="RequestLoan_Click">
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="Money" Foreground="SkyBlue" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     <TextBlock Text="Request Loan" Foreground="Black"/>
                 </StackPanel>
             </Button>
         </StackPanel>
-        <Button Height="50" Background="Transparent" VerticalAlignment="Bottom" Grid.Row="0" Grid.Column="0">
+        <Button Height="50" Background="Transparent" BorderBrush="Transparent" VerticalAlignment="Bottom" Grid.Row="0" Grid.Column="0" Click="Close_Click">
             <StackPanel Orientation="Horizontal">
                 <materialDesign:PackIcon Kind="ArrowLeft" Foreground="Black" Margin="-60,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 <TextBlock Text="Close" Foreground="Black" Margin="0,0,40,0"/>
             </StackPanel>
         </Button>
 
-        <Grid>
-            <ListView x:Name="expenses" Grid.Row="3" Grid.Column="1">
+        <ScrollViewer x:Name="usersscroll" Visibility="Visible" Grid.Row="3" Grid.Column="1">
+            <ListView x:Name="users" HorizontalAlignment="Center">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding ItemName}" Width="200"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding ItemType}" Width="200"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding Price}" Width="145"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Email}" Header="User ID" Width="200"/>
                     </GridView>
                 </ListView.View>
             </ListView>
-        </Grid>
+        </ScrollViewer>
+        <ScrollViewer x:Name="requestedloansscroll" Visibility="Collapsed" Grid.Row="3" Grid.Column="1">
+            <ListView x:Name="requestedloans">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Email}" Header="User ID" Width="200"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding LoanAmount}" Header="Amount (Taka)" Width="150"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding LoanCategory}" Header="Category" Width="150"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding LoanRequestReason}" Header="Reason" Width="200"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </ScrollViewer>
 
     </Grid>
 </UserControl>

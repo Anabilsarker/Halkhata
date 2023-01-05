@@ -33,7 +33,25 @@ namespace Halkhata.UC
 
         private void Submit_Click(object sender, RoutedEventArgs e)
         {
-            MySqlDatabase.Instance.Update_Table_User(email.Text, password.Text, name.Text, 0.0, 0.0, 0.0);
+            if (email.Text != "" || password.Text != "" || name.Text != "")
+            {
+                MySqlDatabase.Instance.Update_Table_User(email.Text, password.Text, name.Text, 0.0, 0.0, 0.0);
+                MessageBox.Show("User created successfully");
+            }
+            else
+            {
+                MessageBox.Show("Please enter valid information");
+            }
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            submit.IsEnabled = true;
+        }
+
+        private void agreementcheck_Unchecked(object sender, RoutedEventArgs e)
+        {
+            submit.IsEnabled = false;
         }
     }
 }

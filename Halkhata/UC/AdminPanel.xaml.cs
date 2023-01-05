@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Halkhata.Database;
+using Halkhata.Model;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Halkhata.UC
 {
@@ -20,9 +11,36 @@ namespace Halkhata.UC
     /// </summary>
     public partial class AdminPanel : UserControl
     {
+        public static AdminPanel Instance { get { return _instance; } }
+        private static AdminPanel _instance = null;
+        public ObservableCollection<UserData> userData = new ObservableCollection<UserData>();
         public AdminPanel()
         {
             InitializeComponent();
+            requestedloans.ItemsSource = userData;
+            users.ItemsSource = userData;
+            _instance = this;
+        }
+
+        private void UsersButton_Click(object sender, RoutedEventArgs e)
+        {
+            usersscroll.Visibility = Visibility.Visible;
+            requestedloansscroll.Visibility = Visibility.Collapsed;
+            userData.Clear();
+            MySqlDatabase.Instance.Read_Table_User();
+        }
+
+        private void RequestLoan_Click(object sender, RoutedEventArgs e)
+        {
+            requestedloansscroll.Visibility = Visibility.Visible;
+            usersscroll.Visibility = Visibility.Collapsed;
+            userData.Clear();
+            MySqlDatabase.Instance.Read_Table_Loan();
+        }
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.Instance.mainwindow.Content = new Login();
         }
     }
 }

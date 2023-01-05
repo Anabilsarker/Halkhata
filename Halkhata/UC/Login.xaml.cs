@@ -30,6 +30,7 @@ namespace Halkhata.UC
             db.Initialize_DB();
             db.Create_Table_User();
             db.Create_Table_Expences();
+            db.Create_Table_Loan();
         }
 
         private void Hyperlink_Click(object sender, RoutedEventArgs e)

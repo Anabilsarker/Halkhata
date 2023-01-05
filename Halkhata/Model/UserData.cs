@@ -10,6 +10,8 @@ namespace Halkhata.Model
     {
         public string Name { get; set; }
         public string Email { get; set; }
-        public double Loan { get; set; }
+        public double LoanAmount { get; set; }
+        public string LoanCategory { get; set; }
+        public string LoanRequestReason { get; set; }
     }
 }
